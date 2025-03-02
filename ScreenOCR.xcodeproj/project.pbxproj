@@ -1,0 +1,554 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		498452DF2D74BD55008D6E0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 498452C52D74BD54008D6E0F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 498452CC2D74BD54008D6E0F;
+			remoteInfo = ScreenOCR;
+		};
+		498452E92D74BD55008D6E0F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 498452C52D74BD54008D6E0F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 498452CC2D74BD54008D6E0F;
+			remoteInfo = ScreenOCR;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		498452CD2D74BD54008D6E0F /* ScreenOCR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenOCR.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		498452DE2D74BD55008D6E0F /* ScreenOCRTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenOCRTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		498452E82D74BD55008D6E0F /* ScreenOCRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenOCRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		498452CF2D74BD54008D6E0F /* ScreenOCR */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ScreenOCR;
+			sourceTree = "<group>";
+		};
+		498452E12D74BD55008D6E0F /* ScreenOCRTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ScreenOCRTests;
+			sourceTree = "<group>";
+		};
+		498452EB2D74BD55008D6E0F /* ScreenOCRUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ScreenOCRUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		498452CA2D74BD54008D6E0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		498452DB2D74BD55008D6E0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		498452E52D74BD55008D6E0F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		498452C42D74BD54008D6E0F = {
+			isa = PBXGroup;
+			children = (
+				498452CF2D74BD54008D6E0F /* ScreenOCR */,
+				498452E12D74BD55008D6E0F /* ScreenOCRTests */,
+				498452EB2D74BD55008D6E0F /* ScreenOCRUITests */,
+				498452CE2D74BD54008D6E0F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		498452CE2D74BD54008D6E0F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				498452CD2D74BD54008D6E0F /* ScreenOCR.app */,
+				498452DE2D74BD55008D6E0F /* ScreenOCRTests.xctest */,
+				498452E82D74BD55008D6E0F /* ScreenOCRUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		498452CC2D74BD54008D6E0F /* ScreenOCR */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 498452F22D74BD55008D6E0F /* Build configuration list for PBXNativeTarget "ScreenOCR" */;
+			buildPhases = (
+				498452C92D74BD54008D6E0F /* Sources */,
+				498452CA2D74BD54008D6E0F /* Frameworks */,
+				498452CB2D74BD54008D6E0F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				498452CF2D74BD54008D6E0F /* ScreenOCR */,
+			);
+			name = ScreenOCR;
+			packageProductDependencies = (
+			);
+			productName = ScreenOCR;
+			productReference = 498452CD2D74BD54008D6E0F /* ScreenOCR.app */;
+			productType = "com.apple.product-type.application";
+		};
+		498452DD2D74BD55008D6E0F /* ScreenOCRTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 498452F52D74BD55008D6E0F /* Build configuration list for PBXNativeTarget "ScreenOCRTests" */;
+			buildPhases = (
+				498452DA2D74BD55008D6E0F /* Sources */,
+				498452DB2D74BD55008D6E0F /* Frameworks */,
+				498452DC2D74BD55008D6E0F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				498452E02D74BD55008D6E0F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				498452E12D74BD55008D6E0F /* ScreenOCRTests */,
+			);
+			name = ScreenOCRTests;
+			packageProductDependencies = (
+			);
+			productName = ScreenOCRTests;
+			productReference = 498452DE2D74BD55008D6E0F /* ScreenOCRTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		498452E72D74BD55008D6E0F /* ScreenOCRUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 498452F82D74BD55008D6E0F /* Build configuration list for PBXNativeTarget "ScreenOCRUITests" */;
+			buildPhases = (
+				498452E42D74BD55008D6E0F /* Sources */,
+				498452E52D74BD55008D6E0F /* Frameworks */,
+				498452E62D74BD55008D6E0F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				498452EA2D74BD55008D6E0F /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				498452EB2D74BD55008D6E0F /* ScreenOCRUITests */,
+			);
+			name = ScreenOCRUITests;
+			packageProductDependencies = (
+			);
+			productName = ScreenOCRUITests;
+			productReference = 498452E82D74BD55008D6E0F /* ScreenOCRUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		498452C52D74BD54008D6E0F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					498452CC2D74BD54008D6E0F = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					498452DD2D74BD55008D6E0F = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 498452CC2D74BD54008D6E0F;
+					};
+					498452E72D74BD55008D6E0F = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 498452CC2D74BD54008D6E0F;
+					};
+				};
+			};
+			buildConfigurationList = 498452C82D74BD54008D6E0F /* Build configuration list for PBXProject "ScreenOCR" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 498452C42D74BD54008D6E0F;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 498452CE2D74BD54008D6E0F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				498452CC2D74BD54008D6E0F /* ScreenOCR */,
+				498452DD2D74BD55008D6E0F /* ScreenOCRTests */,
+				498452E72D74BD55008D6E0F /* ScreenOCRUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		498452CB2D74BD54008D6E0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		498452DC2D74BD55008D6E0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		498452E62D74BD55008D6E0F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		498452C92D74BD54008D6E0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		498452DA2D74BD55008D6E0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		498452E42D74BD55008D6E0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		498452E02D74BD55008D6E0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 498452CC2D74BD54008D6E0F /* ScreenOCR */;
+			targetProxy = 498452DF2D74BD55008D6E0F /* PBXContainerItemProxy */;
+		};
+		498452EA2D74BD55008D6E0F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 498452CC2D74BD54008D6E0F /* ScreenOCR */;
+			targetProxy = 498452E92D74BD55008D6E0F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		498452F02D74BD55008D6E0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		498452F12D74BD55008D6E0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		498452F32D74BD55008D6E0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScreenOCR/ScreenOCR.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ScreenOCR/Preview Content\"";
+				DEVELOPMENT_TEAM = 7A8P3NLUDW;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = twindai.ScreenOCR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		498452F42D74BD55008D6E0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScreenOCR/ScreenOCR.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"ScreenOCR/Preview Content\"";
+				DEVELOPMENT_TEAM = 7A8P3NLUDW;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = twindai.ScreenOCR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		498452F62D74BD55008D6E0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7A8P3NLUDW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = twindai.ScreenOCRTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScreenOCR.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScreenOCR";
+			};
+			name = Debug;
+		};
+		498452F72D74BD55008D6E0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7A8P3NLUDW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = twindai.ScreenOCRTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScreenOCR.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScreenOCR";
+			};
+			name = Release;
+		};
+		498452F92D74BD55008D6E0F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7A8P3NLUDW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = twindai.ScreenOCRUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = ScreenOCR;
+			};
+			name = Debug;
+		};
+		498452FA2D74BD55008D6E0F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7A8P3NLUDW;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = twindai.ScreenOCRUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = ScreenOCR;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		498452C82D74BD54008D6E0F /* Build configuration list for PBXProject "ScreenOCR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				498452F02D74BD55008D6E0F /* Debug */,
+				498452F12D74BD55008D6E0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		498452F22D74BD55008D6E0F /* Build configuration list for PBXNativeTarget "ScreenOCR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				498452F32D74BD55008D6E0F /* Debug */,
+				498452F42D74BD55008D6E0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		498452F52D74BD55008D6E0F /* Build configuration list for PBXNativeTarget "ScreenOCRTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				498452F62D74BD55008D6E0F /* Debug */,
+				498452F72D74BD55008D6E0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		498452F82D74BD55008D6E0F /* Build configuration list for PBXNativeTarget "ScreenOCRUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				498452F92D74BD55008D6E0F /* Debug */,
+				498452FA2D74BD55008D6E0F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 498452C52D74BD54008D6E0F /* Project object */;
+}
