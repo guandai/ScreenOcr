@@ -1,66 +1,55 @@
-import AppKit
-import Vision
+import Cocoa
 
-class ClipboardMonitor {
-    private var lastImageHash: Int?
+@main
+class AppDelegate: NSObject, NSApplicationDelegate {
+    var statusItem: NSStatusItem?
+    let ocrProcessor = OCRProcessor()
 
-    init() {
-        startMonitoring()
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        NSLog("Application started: OCR Clipboard App")
+        registerShortcut()
     }
 
-    func startMonitoring() {
-        Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(checkClipboard), userInfo: nil, repeats: true)
-    }
+    func registerShortcut() {
+        NSLog("Registering global keyboard shortcut for Cmd+Shift+6")
+        NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { (event) in
+            NSLog("Key event detected: \(event.keyCode)")
 
-    @objc private func checkClipboard() {
-        if let image = getClipboardImage() {
-            let currentHash = image.hashValue
-            if lastImageHash != currentHash {
-                lastImageHash = currentHash
-                performOCR(on: image)
+            if event.modifierFlags.contains(.command) &&
+                event.modifierFlags.contains(.shift) &&
+                event.keyCode == 0x17 { // Keycode 0x17 = 6 key
+                NSLog("Cmd+Shift+6 detected. Initiating screenshot capture...")
+                self.captureScreenshotAndProcessOCR()
             }
         }
     }
 
-    private func getClipboardImage() -> NSImage? {
-        if let imageData = NSPasteboard.general.data(forType: .tiff),
-           let image = NSImage(data: imageData) {
-            return image
+    func captureScreenshotAndProcessOCR() {
+        let task = Process()
+        task.launchPath = "/usr/sbin/screencapture"
+        task.arguments = ["-c", "-x"] // -c: Copy to clipboard, -x: No sound
+
+        NSLog("Running screencapture command: /usr/sbin/screencapture -c -x")
+        task.launch()
+        task.waitUntilExit()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            NSLog("Checking clipboard for image...")
+            if let image = self.getClipboardImage() {
+                NSLog("Image found in clipboard. Passing to OCR processor...")
+                self.ocrProcessor.performOCR(on: image)
+            } else {
+                NSLog("Failed to retrieve image from clipboard. No image detected.")
+            }
         }
+    }
+
+    func getClipboardImage() -> NSImage? {
+        if let imageData = NSPasteboard.general.data(forType: .tiff) {
+            NSLog("Clipboard contains TIFF image data.")
+            return NSImage(data: imageData)
+        }
+        NSLog("No image data found in clipboard.")
         return nil
-    }
-
-    private func performOCR(on image: NSImage) {
-        guard let imageData = image.tiffRepresentation,
-              let ciImage = CIImage(data: imageData) else { return }
-
-        let request = VNRecognizeTextRequest { request, error in
-            if let error = error {
-                print("OCR Error: \(error.localizedDescription)")
-                return
-            }
-
-            guard let results = request.results as? [VNRecognizedTextObservation] else { return }
-            let recognizedText = results.compactMap { $0.topCandidates(1).first?.string }.joined(separator: "\n")
-
-            DispatchQueue.main.async {
-                self.updateClipboard(with: recognizedText)
-            }
-        }
-        request.recognitionLevel = .accurate
-        request.usesLanguageCorrection = true
-
-        let handler = VNImageRequestHandler(ciImage: ciImage, options: [:])
-        do {
-            try handler.perform([request])
-        } catch {
-            print("Failed to perform OCR: \(error)")
-        }
-    }
-
-    private func updateClipboard(with text: String) {
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(text, forType: .string)
-        print("Updated Clipboard with OCR Text:\n\(text)")
     }
 }
