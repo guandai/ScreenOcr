@@ -1,42 +1,38 @@
 import Cocoa
 import Carbon
 
-class MenuBar {
-    var statusItem: NSStatusItem?
-    
-    init(statusItem: NSStatusItem?) {
-        self.statusItem = statusItem
-    }
+class MenuBar: NSObject {
+    // Create a status item and store it as a property
+    var statusItem: NSStatusItem? = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
     func createMenuBarIcon() {
-        // Create a status bar item with variable length
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-
-        if let button = statusItem?.button {
-            // You can set an icon, title, or both.
-            // This example just sets text:
-            button.title = "SO"
-            // If you want an image instead:
-            // button.image = NSImage(systemSymbolName: "doc.text.magnifyingglass", accessibilityDescription: "OCR App")
-            button.action = #selector(didTapStatusBarIcon)
-        }
-
-        // Create a simple menu if you want to control the app from the icon
-        let menu = NSMenu()
-        menu.addItem(
-            NSMenuItem(
-                title: "Quit",
-                action: #selector(quitApp),
-                keyEquivalent: "q"
-            )
-        )
-        statusItem?.menu = menu
+    // Create a status bar item with variable length
+    statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    
+    if let button = statusItem?.button {
+        // Set a text title or an image for the menu bar icon
+        button.title = "SO"
+        // Set the button's target if you have an action
+        button.action = #selector(didTapStatusBarIcon)
+        button.target = self
     }
     
+    // Create a simple menu for the status item
+    let menu = NSMenu()
+    let quitItem = NSMenuItem(
+        title: "Quit",
+        action: #selector(quitApp),
+        keyEquivalent: "q"
+    )
+    // Set the target for the quit item so that the action is properly routed
+    quitItem.target = self
+    menu.addItem(quitItem)
+    
+    statusItem?.menu = menu
+}
+
     
     @objc func didTapStatusBarIcon() {
-        // This is called if the user clicks the icon
-        // (if no menu is assigned, or if you handle this differently)
         print("Status bar icon clicked.")
     }
 

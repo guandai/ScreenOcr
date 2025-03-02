@@ -7,7 +7,7 @@ class OCRProcessor {
         print("Starting OCR process...")
 
         guard let imageData = image.tiffRepresentation,
-              let ciImage = CIImage(data: imageData) else {
+            let ciImage = CIImage(data: imageData) else {
             print("Failed to convert NSImage to CIImage.")
             return
         }
