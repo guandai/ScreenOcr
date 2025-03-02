@@ -2,7 +2,15 @@ import Cocoa
 import Carbon
 
 class MenuBar {
-    func createMenuBarIcon( statusItem: NSStatusItem? ) {
+    var statusItem: NSStatusItem?
+    
+    init(statusItem: NSStatusItem?) {
+        self.statusItem = statusItem
+    }
+
+    func createMenuBarIcon() {
+        // Create a status bar item with variable length
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
         if let button = statusItem?.button {
             // You can set an icon, title, or both.
@@ -24,6 +32,7 @@ class MenuBar {
         )
         statusItem?.menu = menu
     }
+    
     
     @objc func didTapStatusBarIcon() {
         // This is called if the user clicks the icon
