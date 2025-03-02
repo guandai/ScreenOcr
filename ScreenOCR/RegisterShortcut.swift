@@ -1,111 +1,132 @@
-import Cocoa
 import Carbon
+import Cocoa
+
+// Define a typealias for our callback
+typealias HotKeyCallback = () -> Void
+
+// Global variable to store our callback
+var globalHotKeyCallback: HotKeyCallback?
+
 
 @_cdecl("globalHotKeyHandler")
 func globalHotKeyHandler(
-    _ nextHandler: EventHandlerCallRef?,
-    _ theEvent: EventRef?,
-    _ userData: UnsafeMutableRawPointer?
+  _ nextHandler: EventHandlerCallRef?,
+  _ theEvent: EventRef?,
+  _ userData: UnsafeMutableRawPointer?
 ) -> OSStatus {
 
-    var hkID = EventHotKeyID()
-    GetEventParameter(theEvent,
-                      EventParamName(kEventParamDirectObject),
-                      EventParamType(typeEventHotKeyID),
-                      nil,
-                      MemoryLayout<EventHotKeyID>.size,
-                      nil,
-                      &hkID)
+  var hkID = EventHotKeyID()
+  GetEventParameter(
+    theEvent,
+    EventParamName(kEventParamDirectObject),
+    EventParamType(typeEventHotKeyID),
+    nil,
+    MemoryLayout<EventHotKeyID>.size,
+    nil,
+    &hkID)
 
-    // Compare signature + id:
-    if hkID.signature == OSType(1234) && hkID.id == 1 {
-        print("🔥 Shortcut #1 pressed!")
-        // ...
-    } else if hkID.signature == OSType(1234) && hkID.id == 2 {
-        print("🔥 Shortcut #2 pressed!")
-        // ...
-    }
+  // Compare signature + id:
+  if hkID.signature == OSType(1234) && hkID.id == 1 {
+    print("🔥 Shortcut #1 pressed!")
+    globalHotKeyCallback?()
+    // ...
+  } else if hkID.signature == OSType(1234) && hkID.id == 2 {
+    print("🔥 Shortcut #2 pressed!")
+    // ...
+  }
 
-    return noErr
+  return noErr
 }
 
 
-func registerGlobalHotKey(
+class RegisterShortcut {
+
+  
+
+  func setHotKeyCallback(callback: @escaping HotKeyCallback) {
+    print("🔥 Global hotkey triggered: executing screenshot capture!")
+    globalHotKeyCallback = callback
+  }
+
+    
+  
+
+  func registerGlobalHotKey(
     key: String,
     modifiers: [String],
+    callback: @escaping HotKeyCallback,
     hotKeyIDNumber: UInt32 = 1,
     signature: OSType = OSType(1234)
-) {
-    // 1. Find the key code
+  ) {
+    // Find the key code
     guard let keyCode = keyCodeMap[key.uppercased()] else {
-        print("❌ registerGlobalHotKey: Unrecognized key '\(key)'")
-        return
+      print("❌ registerGlobalHotKey: Unrecognized key '\(key)'")
+      return
     }
 
-    print(1)
-    // 2. Build Carbon modifier flags
+    // Set Callback
+      setHotKeyCallback(callback: callback)
+    
+    // Build Carbon modifier flags
     let carbonFlags = carbonModifiers(forModifiers: modifiers)
 
-    // 3. Create the hotkey identifier
+    // Create the hotkey identifier
     let hotKeyID = EventHotKeyID(signature: signature, id: hotKeyIDNumber)
 
-    // 4. The reference that macOS gives us
+    // The reference that macOS gives us
     var hotKeyRef: EventHotKeyRef?
 
-    // 5. The event types we care about (a pressed hotkey)
+    // The event types we care about (a pressed hotkey)
     let eventType = EventTypeSpec(
-        eventClass: OSType(kEventClassKeyboard),
-        eventKind:  OSType(kEventHotKeyPressed)
+      eventClass: OSType(kEventClassKeyboard),
+      eventKind: OSType(kEventHotKeyPressed)
     )
     print(6)
-    // 6. Install our globalHotKeyHandler function pointer
+    // Install our globalHotKeyHandler function pointer
     //    Instead of an inline Swift closure.
     InstallEventHandler(
-        GetApplicationEventTarget(),
-        globalHotKeyHandler,  // <--- Pass the top-level function
-        1,
-        [eventType],
-        nil,      // userData, if you want to pass something in
-        nil
+      GetApplicationEventTarget(),
+      globalHotKeyHandler,  // <--- Pass the top-level function
+      1,
+      [eventType],
+      nil,  // userData, if you want to pass something in
+      nil
     )
 
     // 7. Finally register the hotkey
-    let status = RegisterEventHotKey(keyCode, carbonFlags, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef)
+    let status = RegisterEventHotKey(
+      keyCode, carbonFlags, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef)
 
     if status == noErr {
-        print(11)
-        print("✅ Registered hotkey: \(modifiers)+\(key) (id=\(hotKeyIDNumber), sig=\(signature))")
+      print(11)
+      print("✅ Registered hotkey: \(modifiers)+\(key) (id=\(hotKeyIDNumber), sig=\(signature))")
     } else {
-        print("❌ Failed to register hotkey. Error code: \(status)")
+      print("❌ Failed to register hotkey. Error code: \(status)")
     }
-}
+  }
 
-
-func carbonModifiers(forModifiers modifiers: [String]) -> UInt32 {
+  func carbonModifiers(forModifiers modifiers: [String]) -> UInt32 {
     var carbonFlags: UInt32 = 0
 
     for mod in modifiers {
-        switch mod.lowercased() {
-        case "cmd":
-            carbonFlags |= UInt32(cmdKey)
-        case "shift":
-            carbonFlags |= UInt32(shiftKey)
-        case "ctrl", "control":
-            carbonFlags |= UInt32(controlKey)
-        case "alt", "option":
-            carbonFlags |= UInt32(optionKey)
-        default:
-            break
-        }
+      switch mod.lowercased() {
+      case "cmd":
+        carbonFlags |= UInt32(cmdKey)
+      case "shift":
+        carbonFlags |= UInt32(shiftKey)
+      case "ctrl", "control":
+        carbonFlags |= UInt32(controlKey)
+      case "alt", "option":
+        carbonFlags |= UInt32(optionKey)
+      default:
+        break
+      }
     }
     return carbonFlags
-}
+  }
 
-
-
-
-/// Common ASCII keys mapped to their Carbon key codes
-let keyCodeMap: [String: UInt32] = [
+  /// Common ASCII keys mapped to their Carbon key codes
+  let keyCodeMap: [String: UInt32] = [
     "A": UInt32(kVK_ANSI_A),
     "B": UInt32(kVK_ANSI_B),
     "C": UInt32(kVK_ANSI_C),
@@ -146,4 +167,6 @@ let keyCodeMap: [String: UInt32] = [
 
     // You could also add punctuation or special keys if desired:
     // "-", "=", "[", "]", "\\", ";", "'", ",", ".", "/", ...
-]
+  ]
+
+}
