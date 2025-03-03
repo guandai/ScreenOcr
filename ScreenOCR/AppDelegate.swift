@@ -1,6 +1,12 @@
 import Cocoa
 import Carbon
 
+//enum CbKey: String {
+//    case run = "run"
+//    case setting = "setting"
+//    case quit = "quit"
+//}
+
 //@main
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     var statusItem: NSStatusItem?
@@ -10,15 +16,34 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         NSLog("✅ ScreenOCR Started")
 
         NSApplication.shared.setActivationPolicy(.regular)
+        NSApplication.shared.setActivationPolicy(.accessory)
         NSApplication.shared.activate(ignoringOtherApps: true)
 
-        RegisterShortcut().registerGlobalHotKey(
+        let rs = RegisterShortcut()
+        
+        
+        menuBar = MenuBar(rs: rs)
+        menuBar?.createMenuBarIcon()
+        
+        let cbMap = menuBar?.getCbMap()
+        if let cbMapUnwrapped = cbMap {
+            registerCombines(rs: rs, cbMap: cbMapUnwrapped)
+        }
+    }
+    
+    func registerCombines(rs: RegisterShortcut, cbMap: CbMap ){
+        rs.registerGlobalHotKey(
             key: "6",
-            modifiers: ["ctrl", "cmd", "shift"],
-            callback: FullscreenCapture().runAll
+            modifiers: ["cmd", "shift"],
+            callback: cbMap["run"] ?? {},
+            hotKeyIDNumber: 1001
         )
         
-        menuBar = MenuBar()
-        menuBar?.createMenuBarIcon()
+        rs.registerGlobalHotKey(
+            key: "7",
+            modifiers: ["cmd", "shift"],
+            callback: cbMap["setting"] ?? {},
+            hotKeyIDNumber: 1002
+        )
     }
 }

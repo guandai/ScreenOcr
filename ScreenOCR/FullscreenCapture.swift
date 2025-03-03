@@ -21,7 +21,6 @@ class FullscreenCapture {
 		}
 
 
-
 		func processClipboardImageForOCR() {
 			guard let imageData = NSPasteboard.general.data(forType: .tiff) else {
 					print("No image data found in clipboard.")

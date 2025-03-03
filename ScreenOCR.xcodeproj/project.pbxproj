@@ -29,9 +29,33 @@
 		498452E82D74BD55008D6E0F /* ScreenOCRUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScreenOCRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		498453112D74FF4D008D6E0F /* Exceptions for "ScreenOCR" folder in "ScreenOCR" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 498452CC2D74BD54008D6E0F /* ScreenOCR */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		498453122D74FF4D008D6E0F /* Exceptions for "ScreenOCR" folder in "Compile Sources" phase from "ScreenOCR" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 498452C92D74BD54008D6E0F /* Sources */;
+			membershipExceptions = (
+				Info.plist,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		498452CF2D74BD54008D6E0F /* ScreenOCR */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				498453112D74FF4D008D6E0F /* Exceptions for "ScreenOCR" folder in "ScreenOCR" target */,
+				498453122D74FF4D008D6E0F /* Exceptions for "ScreenOCR" folder in "Compile Sources" phase from "ScreenOCR" target */,
+			);
 			path = ScreenOCR;
 			sourceTree = "<group>";
 		};

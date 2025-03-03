@@ -1,55 +1,49 @@
+import Carbon
 import Cocoa
 
-class SettingsWindowController: NSWindowController {
-
-    let quitButton = NSButton()
+class UpdateHotkey {
+    var rs : RegisterShortcut
+    var cbMap : CbMap
+    private var hotkeyMap: [String: UInt32] = [:]
     
-    
-    var rs: RegisterShortcut
-    var cbMap: CbMap
-
-    init(rs: RegisterShortcut, cbMap: CbMap) {
+    init(rs: RegisterShortcut, cbMap: CbMap){
         self.rs = rs
         self.cbMap = cbMap
+    }
+    
+    func updateHotkey(name: String, tf: NSTextField) {
+        let keyStr = tf.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        if keyStr.isEmpty {
+            print("No hotkey combination entered.")
+            return
+        }
         
-        // Create a new window instance
-        let settingsWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 400, height: 200),
-            styleMask: [.titled, .closable, .miniaturizable],
-            backing: .buffered,
-            defer: false
+        print("Changing hotkey to: \(keyStr)")
+        // Split the input string by '+'.
+        // The last element is assumed to be the key, the rest are modifiers.
+        let parts = keyStr.split(separator: "+").map { String($0).lowercased() }
+        guard let keyPart = parts.last else {
+            print("Invalid hotkey combination.")
+            return
+        }
+
+        let modifiers = parts.dropLast().map { String($0) }
+        print("Registering hotkey with key: \(keyPart) and modifiers: \(modifiers)")
+        
+        if let oldHotkeyID = hotkeyMap[name] {
+            rs.unregisterGlobalHotKey(oldHotkeyID)
+        }
+        let newHotkeyID: UInt32 = UInt32.random(in: 1000...9999)
+
+        // Register the new hotkey
+        rs.registerGlobalHotKey(
+            key: keyPart,
+            modifiers: Array(modifiers),
+            callback: cbMap[name] ?? {},
+            hotKeyIDNumber: newHotkeyID
         )
-        settingsWindow.title = "Settings"
 
-        // Call the designated initializer of NSWindowController
-        super.init(window: settingsWindow)
-
-        // Setup the UI elements
-        setupUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    
-    
-    func setupUI() {
-        guard let cv = window?.contentView else { return }
-        
-        // Label for instructions
-        let label = NSTextField(labelWithString: "Enter new hotkey combination (e.g. cmd+shift+6):")
-        label.frame = NSRect(x: 20, y: 160, width: 360, height: 24)
-        cv.addSubview(label)
-        
-        let addFields = AddFields()
-        addFields.addChangeKey(cv: cv, name: "setting" , title: "Change Setting Key" )
-        addFields.addChangeKey(cv: cv, name: "run", title: "Change Run Key")
-
-        addFields.addBtn(cv: cv, title: "Quit Application", action: quitApp, x: 20, y: 20, w: btnW, h: btnH)
-    }
-    
-    func quitApp() {
-        NSApplication.shared.terminate(nil)
+        // Store the new hotkey reference
+        hotkeyMap[name] = newHotkeyID
     }
 }

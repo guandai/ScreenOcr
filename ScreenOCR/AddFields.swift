@@ -1,91 +1,61 @@
 import Cocoa
 
-class SettingsWindowController: NSWindowController {
+let btnW = 140
+let btnH = 24
 
-    let quitButton = NSButton()
-    var btnActions: [BtnWrapper] = []
-    
+var change_btn_y = 80;
+var change_tf_y = 80;
+let y_offset = 40;
+
+typealias Fn = () -> Void
+
+// Helper class to handle closure-based action
+class BtnWrapper: NSObject {
+    let action: () -> Void
+    init(action: @escaping () -> Void) {
+        self.action = action
+    }
+    @objc func invoke() { action() }
+}
+
+
+class AddFields {
     var rs: RegisterShortcut
     var cbMap: CbMap
 
     init(rs: RegisterShortcut, cbMap: CbMap) {
         self.rs = rs
         self.cbMap = cbMap
+    }
+    
+    func addBtn (cv: NSView, title: String, action: @escaping Fn, wraps: inout [BtnWrapper],  x: Int, y: Int, w: Int = btnW, h: Int = btnH ) {
+        let actionWrapper = BtnWrapper(action: action)
+        wraps.append(actionWrapper)
         
-        // Create a new window instance
-        let settingsWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 400, height: 200),
-            styleMask: [.titled, .closable, .miniaturizable],
-            backing: .buffered,
-            defer: false
-        )
-        settingsWindow.title = "Settings"
-
-        // Call the designated initializer of NSWindowController
-        super.init(window: settingsWindow)
-
-        // Setup the UI elements
-        setupUI()
+        let btn = NSButton()
+        btn.title = title
+        btn.bezelStyle = .rounded
+        btn.frame = NSRect(x: x, y: y, width: w, height: h)
+        btn.target = actionWrapper
+        btn.action = #selector(BtnWrapper.invoke)
+        cv.addSubview(btn)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    
-    
-    func setupUI() {
-        guard let cv = window?.contentView else { return }
+    func addChangeKey(cv: NSView, name: String, title: String, wraps: inout [BtnWrapper]) {
+        let tf = NSTextField()
+        // Text field for new hotkey combination
+        tf.frame = NSRect(x: 20, y: change_tf_y, width: 200, height: 24)
+        tf.placeholderString = "cmd+shift+..."
+        cv.addSubview(tf)
         
-        // Label for instructions
-        let label = NSTextField(labelWithString: "Enter new hotkey combination (e.g. cmd+shift+6):")
-        label.frame = NSRect(x: 20, y: 160, width: 360, height: 24)
-        cv.addSubview(label)
-        
-        addChangeKeyGroup(cv: cv, name: "setting" , title: "Change Setting Key" )
-        addChangeKeyGroup(cv: cv, name: "run", title: "Change Run Key" )
-
-        addBtn(cv: cv, title: "Quit Application", action: quitApp, x: 20, y: 20, w: btnW, h: btnH)
-    }
-    
-    func quitApp() {
-        NSApplication.shared.terminate(nil)
-    }
-    
-    func updateHotkey(name: String, tf: NSTextField) {
-        let keyStr = tf.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
-        if keyStr.isEmpty {
-            print("No hotkey combination entered.")
-            return
+        let action: () -> Void = { [weak self] in
+            guard let self = self else { return }
+            
+            let keys = UpdateHotkey(rs: self.rs, cbMap: self.cbMap)
+            keys.updateHotkey(name: name, tf: tf)
         }
-        
-        print("Changing hotkey to: \(keyStr)")
-        // Split the input string by '+'.
-        // The last element is assumed to be the key, the rest are modifiers.
-        let parts = keyStr.split(separator: "+").map { String($0).lowercased() }
-        guard let keyPart = parts.last else {
-            print("Invalid hotkey combination.")
-            return
-        }
-
-        let modifiers = parts.dropLast().map { String($0) }
-        print("Registering hotkey with key: \(keyPart) and modifiers: \(modifiers)")
-        
-        if let oldHotkey = hotkeyMap[name] {
-            rs.unregisterGlobalHotKey(oldHotkey)
-        }
-
-        // Register the new hotkey
-        let newHotkey = rs.registerGlobalHotKey(
-            key: keyPart,
-            modifiers: Array(modifiers),
-            callback: cbMap[name] ?? {},
-            hotKeyIDNumber: 1
-        )
-
-        // Store the new hotkey reference
-        hotkeyMap[name] = newHotkey
-        
+        addBtn(cv: cv, title: title, action: action, wraps: &wraps, x: 230, y: change_btn_y)
+        change_btn_y += y_offset
+        change_tf_y += y_offset
     }
-
 }
