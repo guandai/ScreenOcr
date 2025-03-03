@@ -12,6 +12,7 @@ class UpdateHotkey {
     }
     
     func updateHotkey(name: String, tf: NSTextField) {
+        print(22)
         let keyStr = tf.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
         if keyStr.isEmpty {
             print("No hotkey combination entered.")

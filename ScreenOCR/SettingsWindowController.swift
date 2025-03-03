@@ -41,8 +41,8 @@ class SettingsWindowController: NSWindowController {
         
         let addFields = AddFields(rs: rs, cbMap: cbMap)
     
-        addFields.addChangeKey(cv: cv, name: "setting" , title: "Change Setting Key", wraps: &btnActions)
-        addFields.addChangeKey(cv: cv, name: "run", title: "Change Run Key", wraps: &btnActions)
+        addFields.addChangeKey(cv: cv, name: "setting" , title: "Setting Key", wraps: &btnActions)
+        addFields.addChangeKey(cv: cv, name: "run", title: "Run Key", wraps: &btnActions)
 //
         addFields.addBtn(cv: cv, title: "Quit Application", action: quitApp, wraps: &btnActions, x: 20, y: 20, w: btnW, h: btnH)
     }

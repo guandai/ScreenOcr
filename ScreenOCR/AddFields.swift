@@ -18,7 +18,6 @@ class BtnWrapper: NSObject {
     @objc func invoke() { action() }
 }
 
-
 class AddFields {
     var rs: RegisterShortcut
     var cbMap: CbMap
@@ -31,7 +30,7 @@ class AddFields {
     func addBtn (cv: NSView, title: String, action: @escaping Fn, wraps: inout [BtnWrapper],  x: Int, y: Int, w: Int = btnW, h: Int = btnH ) {
         let actionWrapper = BtnWrapper(action: action)
         wraps.append(actionWrapper)
-        
+        print(title)
         let btn = NSButton()
         btn.title = title
         btn.bezelStyle = .rounded
@@ -48,9 +47,7 @@ class AddFields {
         tf.placeholderString = "cmd+shift+..."
         cv.addSubview(tf)
         
-        let action: () -> Void = { [weak self] in
-            guard let self = self else { return }
-            
+        let action: () -> Void = {
             let keys = UpdateHotkey(rs: self.rs, cbMap: self.cbMap)
             keys.updateHotkey(name: name, tf: tf)
         }
