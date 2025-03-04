@@ -36,13 +36,13 @@ class SettingsControl: NSWindowController {
         
         // Label for instructions
         let label = NSTextField(labelWithString: "Enter new hotKeyID combination (e.g. cmd+shift+6):")
-        label.frame = NSRect(x: 20, y: 160, width: 360, height: 24)
+        label.frame = NSRect(x: 20, y: 160, width: 360, height: 26)
         cv.addSubview(label)
         
         let addFields = AddFields(rs: rs, cbMap: cbMap)
     
-        addFields.addChangeKey(cv: cv, keyName: "setting" , title: "Setting Key", wraps: &wraps)
-        addFields.addChangeKey(cv: cv, keyName: "run", title: "Run Key", wraps: &wraps)
+        addFields.addChangeKey(cv: cv, keyName: "setting" , title: "Setting Shortcut", wraps: &wraps)
+        addFields.addChangeKey(cv: cv, keyName: "run", title: "Run Shortcut", wraps: &wraps)
 
         addFields.addBtn(cv: cv, title: "Quit Application", action: quitApp, wraps: &wraps, x: 20, y: 20, w: btnW, h: btnH)
     }

@@ -1,7 +1,7 @@
 import Cocoa
 
-let btnW = 140
-let btnH = 24
+let btnW = 160
+let btnH = 26
 
 var change_btn_y = 80;
 var change_tf_y = 80;
@@ -48,8 +48,7 @@ class AddFields {
         cv.addSubview(tf)
         
         let action: () -> Void = {
-            let uhk = UpdateHotKey(rs: self.rs, cbMap: self.cbMap)
-            uhk.updateHotKey(keyName: keyName, tf: tf)
+            UpdateHotKey.shared().updateHotKey(keyName: keyName, tf: tf)
         }
         addBtn(cv: cv, title: title, action: action, wraps: &wraps, x: 230, y: change_btn_y)
         change_btn_y += y_offset
