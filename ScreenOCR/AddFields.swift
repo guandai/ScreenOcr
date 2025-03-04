@@ -48,8 +48,8 @@ class AddFields {
         cv.addSubview(tf)
         
         let action: () -> Void = {
-            let keys = UpdateHotKey(rs: self.rs, cbMap: self.cbMap)
-            keys.updateHotKey(keyName: keyName, tf: tf)
+            let uhk = UpdateHotKey(rs: self.rs, cbMap: self.cbMap)
+            uhk.updateHotKey(keyName: keyName, tf: tf)
         }
         addBtn(cv: cv, title: title, action: action, wraps: &wraps, x: 230, y: change_btn_y)
         change_btn_y += y_offset

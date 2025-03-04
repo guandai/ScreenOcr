@@ -2,6 +2,8 @@ import Carbon
 import Cocoa
 
 class UpdateHotKey {
+    static let shared = UpdateHotKey(rs: RegisterShortcut(), cbMap: CbMap())
+    
     var rs : RegisterShortcut
     var cbMap : CbMap
     private var hotKeyIDMap: [String: UInt32] = [:]
@@ -68,8 +70,5 @@ class UpdateHotKey {
         )
 
         hotKeyIDMap[keyName] = newhotKeyID
-       
-        
-        
     }
 }
