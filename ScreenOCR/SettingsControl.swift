@@ -1,6 +1,6 @@
 import Cocoa
 
-class settingsControl: NSWindowController {
+class SettingsControl: NSWindowController {
     let quitButton = NSButton()
     var wraps: [BtnWrapper] = []
     
@@ -35,7 +35,7 @@ class settingsControl: NSWindowController {
         guard let cv = window?.contentView else { return }
         
         // Label for instructions
-        let label = NSTextField(labelWithString: "Enter new hotkey combination (e.g. cmd+shift+6):")
+        let label = NSTextField(labelWithString: "Enter new hotKeyID combination (e.g. cmd+shift+6):")
         label.frame = NSRect(x: 20, y: 160, width: 360, height: 24)
         cv.addSubview(label)
         

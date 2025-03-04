@@ -8,9 +8,15 @@ typealias HotKeyCallback = () -> Void
 var globalCbFullOcr: HotKeyCallback = {}
 var globalCbOpenSetting: HotKeyCallback = {}
 
-var globalCallbackMap: [UInt32: HotKeyCallback] = [
-    1001: globalCbFullOcr,
-    1002: globalCbOpenSetting,
+var globalCbMap: [String: [String: Any]] = [
+    "run": [
+        "hotKeyID": UInt32(1001), "name": "run", "title": "Full OCR",
+        "cb": globalCbFullOcr,
+    ],
+    "setting": [
+        "hotKeyID": UInt32(1002), "name": "setting", "title": "Open Settings",
+        "cb": globalCbOpenSetting,
+    ],
 ]
 
 @_cdecl("globalHotKeyHandler")
@@ -19,7 +25,6 @@ func globalHotKeyHandler(
     _ theEvent: EventRef?,
     _ userData: UnsafeMutableRawPointer?
 ) -> OSStatus {
-
     var hkID = EventHotKeyID()
     GetEventParameter(
         theEvent,
@@ -30,12 +35,23 @@ func globalHotKeyHandler(
         nil,
         &hkID)
 
-    // Compare signature + id:
-    if hkID.signature == OSType(1234) {
-        print("🔥 Shortcut \(hkID.id) pressed!")
-        if let callback = globalCallbackMap[hkID.id] ?? nil {
-            callback()  // Unwrapping safely
+    if hkID.signature != OSType(1234) {
+        print("! not valid signature")
+        return errSecParam  // Commonly used OSStatus error for invalid parameters
+    }
+
+    if let matchingEntry = globalCbMap.first(where: {
+        $0.value["hotKeyID"] as? UInt32 == hkID.id
+    }) {
+        print("> globalHotKeyHandler Found:", matchingEntry)
+        if let callback = matchingEntry.value["cb"] as? HotKeyCallback {
+            print("🔥 Executing callback for hotKeyID \(hkID.id)")
+            callback()
+        } else {
+            print("⚠️ Callback not found for hotKeyID \(hkID.id)")
         }
+    } else {
+        print("❌ globalHotKeyHandler No match found")
     }
 
     return noErr

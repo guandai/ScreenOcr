@@ -30,7 +30,7 @@ class AddFields {
     func addBtn (cv: NSView, title: String, action: @escaping Fn, wraps: inout [BtnWrapper],  x: Int, y: Int, w: Int = btnW, h: Int = btnH ) {
         let actionWrapper = BtnWrapper(action: action)
         wraps.append(actionWrapper)
-        print(title)
+
         let btn = NSButton()
         btn.title = title
         btn.bezelStyle = .rounded
@@ -40,19 +40,28 @@ class AddFields {
         cv.addSubview(btn)
     }
     
-    func addChangeKey(cv: NSView, name: String, title: String, wraps: inout [BtnWrapper]) {
+    func addChangeKey(cv: NSView, keyName: String, title: String, wraps: inout [BtnWrapper]) {
         let tf = NSTextField()
-        // Text field for new hotkey combination
+        // Text field for new hotKeyID combination
         tf.frame = NSRect(x: 20, y: change_tf_y, width: 200, height: 24)
         tf.placeholderString = "cmd+shift+..."
         cv.addSubview(tf)
         
         let action: () -> Void = {
-            let keys = UpdateHotkey(rs: self.rs, cbMap: self.cbMap)
-            keys.updateHotkey(name: name, tf: tf)
+            let keys = UpdateHotKey(rs: self.rs, cbMap: self.cbMap)
+            keys.updateHotKey(keyName: keyName, tf: tf)
         }
         addBtn(cv: cv, title: title, action: action, wraps: &wraps, x: 230, y: change_btn_y)
         change_btn_y += y_offset
         change_tf_y += y_offset
     }
+}
+
+
+
+func debugCallback(_ callback: Any) {
+    let mirror = Mirror(reflecting: callback)
+    print("x Type: \(mirror.subjectType)")
+    print("x Children: \(mirror.children)")
+    print("x Description: \(String(describing: callback))")
 }

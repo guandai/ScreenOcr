@@ -26,24 +26,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         menuBar?.createMenuBarIcon()
         
         let cbMap = menuBar?.getCbMap()
-        if let cbMapUnwrapped = cbMap {
-            registerCombines(rs: rs, cbMap: cbMapUnwrapped)
+        if let cbMapSafe = cbMap {
+            let updateKey = UpdateHotKey(rs: rs, cbMap: cbMapSafe)
+            updateKey.registerNewKeys(keyName: "run", keyPart: "6", modifiers: ["cmd", "shift"])
+            updateKey.registerNewKeys(keyName: "setting", keyPart: "7", modifiers: ["cmd", "shift"] )
         }
-    }
-    
-    func registerCombines(rs: RegisterShortcut, cbMap: CbMap ){
-        rs.registerGlobalHotKey(
-            key: "6",
-            modifiers: ["cmd", "shift"],
-            callback: cbMap["run"] ?? {},
-            hotKeyIDNumber: 1001
-        )
-        
-        rs.registerGlobalHotKey(
-            key: "7",
-            modifiers: ["cmd", "shift"],
-            callback: cbMap["setting"] ?? {},
-            hotKeyIDNumber: 1002
-        )
     }
 }

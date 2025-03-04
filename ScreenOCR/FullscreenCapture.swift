@@ -11,7 +11,7 @@ class FullscreenCapture {
 		}
 
 		func captureScreenshotToClipboard() {
-				print("Capturing full screen and copying to clipboard...")
+				print("> Capturing full screen and copying to clipboard...")
 				
 				let task = Process()
 				task.launchPath = "/usr/sbin/screencapture"
@@ -23,13 +23,13 @@ class FullscreenCapture {
 
 		func processClipboardImageForOCR() {
 			guard let imageData = NSPasteboard.general.data(forType: .tiff) else {
-					print("No image data found in clipboard.")
+					print("! No image data found in clipboard.")
 					return
 			}
 			
 			// Unwrap the NSImage initializer as well
 			guard let image = NSImage(data: imageData) else {
-					print("Failed to create NSImage from data.")
+					print("! Failed to create NSImage from data.")
 					return
 			}
 			

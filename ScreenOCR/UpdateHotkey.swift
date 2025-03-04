@@ -1,50 +1,75 @@
 import Carbon
 import Cocoa
 
-class UpdateHotkey {
+class UpdateHotKey {
     var rs : RegisterShortcut
     var cbMap : CbMap
-    private var hotkeyMap: [String: UInt32] = [:]
+    private var hotKeyIDMap: [String: UInt32] = [:]
     
     init(rs: RegisterShortcut, cbMap: CbMap){
         self.rs = rs
         self.cbMap = cbMap
     }
     
-    func updateHotkey(name: String, tf: NSTextField) {
-        print(22)
-        let keyStr = tf.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
-        if keyStr.isEmpty {
-            print("No hotkey combination entered.")
-            return
-        }
-        
-        print("Changing hotkey to: \(keyStr)")
-        // Split the input string by '+'.
-        // The last element is assumed to be the key, the rest are modifiers.
+    func getKeyparts (keyStr: String) -> (String, [String])? {
+        // Extract the new key, modifiers, etc. from the text field (tf)
+        print("> Changing hotKeyID \(keyStr) to: \(keyStr)")
         let parts = keyStr.split(separator: "+").map { String($0).lowercased() }
         guard let keyPart = parts.last else {
-            print("Invalid hotkey combination.")
-            return
+            print("Invalid hotKeyID combination.")
+            return nil
         }
 
         let modifiers = parts.dropLast().map { String($0) }
-        print("Registering hotkey with key: \(keyPart) and modifiers: \(modifiers)")
+        print("> Registering hotKeyID with \(keyStr) key: \(keyPart) and modifiers: \(modifiers)")
         
-        if let oldHotkeyID = hotkeyMap[name] {
-            rs.unregisterGlobalHotKey(oldHotkeyID)
+        return (keyPart, modifiers)
+    }
+    
+    func updateHotKey(keyName: String, tf: NSTextField) {
+        let keyStr = tf.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        if keyStr.isEmpty {
+            print("! No hotKeyID combination entered.")
+            return
         }
-        let newHotkeyID: UInt32 = UInt32.random(in: 1000...9999)
+        
+        if let (keyPart, modifiers) = getKeyparts(keyStr: keyStr) {
+            print("> updateHotKey call registerNewKeys for: \(keyStr)")
+            registerNewKeys(keyName: keyName, keyPart: keyPart, modifiers: modifiers )
+        } else {
+            print("⚠️ Failed to parse key parts from: \(keyStr)")
+        }
+    }
+    
+    func registerNewKeys(keyName: String, keyPart: String, modifiers: [String] ) {
+        // 2. Deregister (unregister) that old hotKeyID
+        if let oldhotKeyID = hotKeyIDMap[keyName] {
+            print("> unregisterGlobalHotKey")
+            rs.unregisterGlobalHotKey(oldhotKeyID)
+            hotKeyIDMap.removeValue(forKey: keyName)
+        } else {
+            print("! Not unregisterGlobalHotKey")
+        }
+        
+        guard let hotKeyIDEntry = globalCbMap[keyName],
+              let newhotKeyID = hotKeyIDEntry["hotKeyID"] as? UInt32 else {
+            print("⚠️ Error: hotKeyID not found or invalid for key \(keyName)")
+            return
+        }
 
-        // Register the new hotkey
+        print(">>> registerNewKeys call rs.registerGlobalHotKey for: \(keyName) \(keyPart)")
+        // Register the new hotKeyID
         rs.registerGlobalHotKey(
-            key: keyPart,
+            keyName: keyName,
+            callback: cbMap[keyName] ?? {},
+            keyStr: keyPart,
             modifiers: Array(modifiers),
-            callback: cbMap[name] ?? {},
-            hotKeyIDNumber: newHotkeyID
+            hotKeyID: newhotKeyID
         )
 
-        // Store the new hotkey reference
-        hotkeyMap[name] = newHotkeyID
+        hotKeyIDMap[keyName] = newhotKeyID
+       
+        
+        
     }
 }

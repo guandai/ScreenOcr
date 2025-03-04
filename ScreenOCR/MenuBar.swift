@@ -8,7 +8,7 @@ class MenuBar: NSObject {
     var statusItem: NSStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     var rs: RegisterShortcut
     var cbMap: CbMap = [:]
-    private var settingsWindowController: SettingsWindowController?
+    private var settingsControl: SettingsControl?
 
     func terminate() {
         NSApplication.shared.terminate(nil)
@@ -31,12 +31,13 @@ class MenuBar: NSObject {
                 iconBtn.image = icon
             } else {
                 iconBtn.title = "SO"
-                print("Failed to load MenuIcon asset")
+                print("! Failed to load MenuIcon asset")
             }
             iconBtn.action = #selector(didTapStatusBarIcon)
             iconBtn.target = self
         }
     }
+
     func createMenu() {
         // Create a menu and add items
         let menu = NSMenu()
@@ -57,19 +58,28 @@ class MenuBar: NSObject {
         statusItem.menu = menu
     }
     
+    func cb_run () {
+        FullscreenCapture().runAll()
+    }
+    
+    func cb_setting () {
+        openSettings()
+    }
+
+    
 //    func getCbMap
     func getCbMap() -> [String: () -> Void] {
         self.cbMap = [
-            "run": FullscreenCapture().runAll,
+            "run": cb_run,
             "quit": terminate,
-            "setting": openSettings  // Now it can reference openSettings safely
+            "setting": cb_setting  // Now it can reference openSettings safely
         ]
         
         return cbMap
     }
 
     @objc func didTapStatusBarIcon() {
-        print("Status bar icon clicked.")
+        print("> Status bar icon clicked.")
     }
     
     @objc func quitApp() {
@@ -78,7 +88,7 @@ class MenuBar: NSObject {
     
     @objc func openSettings() {
         // If the settings window already exists, just bring it to the front
-        if let controller = settingsWindowController {
+        if let controller = settingsControl {
             controller.showWindow(nil)
             controller.window?.makeKeyAndOrderFront(nil)
             NSApplication.shared.activate(ignoringOtherApps: true)
@@ -86,10 +96,10 @@ class MenuBar: NSObject {
         }
 
         // Otherwise, create a new instance and store it
-        settingsWindowController = SettingsWindowController(rs: rs, cbMap: cbMap)
-        settingsWindowController?.showWindow(nil)
+        settingsControl = SettingsControl(rs: rs, cbMap: cbMap)
+        settingsControl?.showWindow(nil)
 
-        if let window = settingsWindowController?.window, let screen = NSScreen.main {
+        if let window = settingsControl?.window, let screen = NSScreen.main {
             let screenRect = screen.frame
             let windowRect = window.frame
             let centerX = (screenRect.width - windowRect.width) / 2

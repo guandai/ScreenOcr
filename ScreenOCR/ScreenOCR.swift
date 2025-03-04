@@ -6,7 +6,6 @@ struct ScreenOCR: App {
     @State private var hasFullDiskAccess = PermissionsManager().checkFullDiskAccess()
 
     init() {
-        print("start ...A")
         ensureSingleInstance()
     }
 
@@ -32,10 +31,8 @@ struct ScreenOCR: App {
         }
     }
 
-
     /// Ensures that only a single instance of the app runs
     private func ensureSingleInstance() {
-        print("start ...B")
         let bundleIdentifier = Bundle.main.bundleIdentifier!
         let runningApps = NSRunningApplication.runningApplications(withBundleIdentifier: bundleIdentifier)
 
