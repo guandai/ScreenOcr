@@ -1,16 +1,25 @@
 import Carbon
 import Cocoa
 
+struct KeyInfo {
+    var keyId: UInt32
+    var name: String
+    var keyPart: String
+    var modifiers: [String]
+}
+
 class UpdateHotKey {
     static private var instance: UpdateHotKey?
 
     var rs: RegisterShortcut
     var cbMap: CbMap
-    private var hotKeyIDMap: [String: UInt32] = [:]
+    private var keyMap: [String: KeyInfo] = [:]
 
     private init(rs: RegisterShortcut, cbMap: CbMap) {
         self.rs = rs
         self.cbMap = cbMap
+        setHotKeyMap(keyId: 1001, name: "run", keyPart: "", modifiers: [""])
+        setHotKeyMap(keyId: 1002, name: "setting", keyPart: "", modifiers: [""])
     }
 
     static func initialize(rs: RegisterShortcut, cbMap: CbMap) {
@@ -28,25 +37,43 @@ class UpdateHotKey {
         return instance
     }
 
-    func getKeyparts(keyStr: String) -> (String, [String])? {
-        print("> Changing hotKeyID \(keyStr) to: \(keyStr)")
+    func setHotKeyMap (keyId: UInt32, name: String, keyPart: String, modifiers: [String]) {
+        keyMap[name] = KeyInfo( keyId: UInt32(keyId), name: name, keyPart: keyPart, modifiers: modifiers)
+    }
+    
+    func getHotKeyMap () -> [String: KeyInfo] {
+        return keyMap
+    }
+    
+    func getKeyStr (_ keyName: String) -> String {
+        if let keyInfo = keyMap[keyName] {
+            let modifierPart = keyInfo.modifiers.joined(separator: "+")
+            let keyPart = keyInfo.keyPart
+            let result = modifierPart.isEmpty ? keyPart : (modifierPart + "+" + keyPart)
+            return result
+        }
+        return "Not found name"
+    }
+    
+    func getKeyParts(keyStr: String) -> (String, [String])? {
+        print("> Changing keyId \(keyStr) to: \(keyStr)")
         let parts = keyStr.split(separator: "+").map { String($0).lowercased() }
         guard let keyPart = parts.last else {
-            print("Invalid hotKeyID combination.")
+            print("Invalid keyId combination.")
             return nil
         }
         let modifiers = parts.dropLast().map { String($0) }
-        print("> Registering hotKeyID with \(keyStr) key: \(keyPart) and modifiers: \(modifiers)")
+        print("> Registering keyId with \(keyStr) key: \(keyPart) and modifiers: \(modifiers)")
         return (keyPart, modifiers)
     }
 
     func updateHotKey(keyName: String, tf: NSTextField) {
         let keyStr = tf.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
         if keyStr.isEmpty {
-            print("! No hotKeyID combination entered.")
+            print("! No keyId combination entered.")
             return
         }
-        if let (keyPart, modifiers) = getKeyparts(keyStr: keyStr) {
+        if let (keyPart, modifiers) = getKeyParts(keyStr: keyStr) {
             print("> updateHotKey call registerNewKeys for: \(keyStr)")
             registerNewKeys(keyName: keyName, keyPart: keyPart, modifiers: modifiers)
         } else {
@@ -55,17 +82,17 @@ class UpdateHotKey {
     }
 
     func registerNewKeys(keyName: String, keyPart: String, modifiers: [String]) {
-        if let oldhotKeyID = hotKeyIDMap[keyName] {
+        if let oldId = keyMap[keyName]?.keyId {
             print("> unregisterGlobalHotKey")
-            rs.unregisterGlobalHotKey(oldhotKeyID)
-            hotKeyIDMap.removeValue(forKey: keyName)
+            rs.unregisterGlobalHotKey(oldId)
+            keyMap.removeValue(forKey: keyName)
         } else {
             print("! Not unregisterGlobalHotKey")
         }
 
         guard let hotKeyIDEntry = globalCbMap[keyName],
-              let newhotKeyID = hotKeyIDEntry["hotKeyID"] as? UInt32 else {
-            print("⚠️ Error: hotKeyID not found or invalid for key \(keyName)")
+              let newId = hotKeyIDEntry["keyId"] as? UInt32 else {
+            print("⚠️ Error: keyId not found or invalid for key \(keyName)")
             return
         }
 
@@ -73,11 +100,11 @@ class UpdateHotKey {
         rs.registerGlobalHotKey(
             keyName: keyName,
             callback: cbMap[keyName] ?? {},
-            keyStr: keyPart,
+            keyPart: keyPart,
             modifiers: Array(modifiers),
-            hotKeyID: newhotKeyID
+            keyId: newId
         )
 
-        hotKeyIDMap[keyName] = newhotKeyID
+        setHotKeyMap(keyId: newId, name: keyName, keyPart: keyPart, modifiers: modifiers)
     }
 }

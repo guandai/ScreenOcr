@@ -35,7 +35,7 @@ class SettingsControl: NSWindowController {
         guard let cv = window?.contentView else { return }
         
         // Label for instructions
-        let label = NSTextField(labelWithString: "Enter new hotKeyID combination (e.g. cmd+shift+6):")
+        let label = NSTextField(labelWithString: "Enter new keyId combination (e.g. cmd+shift+6):")
         label.frame = NSRect(x: 20, y: 160, width: 360, height: 26)
         cv.addSubview(label)
         

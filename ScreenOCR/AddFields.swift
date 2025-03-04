@@ -42,9 +42,12 @@ class AddFields {
     
     func addChangeKey(cv: NSView, keyName: String, title: String, wraps: inout [BtnWrapper]) {
         let tf = NSTextField()
-        // Text field for new hotKeyID combination
+        let shared = UpdateHotKey.shared()
+        let keyStr = shared.getKeyStr(keyName)
+        
+        // Text field for new keyId combination
         tf.frame = NSRect(x: 20, y: change_tf_y, width: 200, height: 24)
-        tf.placeholderString = "cmd+shift+..."
+        tf.placeholderString = keyStr
         cv.addSubview(tf)
         
         let action: () -> Void = {

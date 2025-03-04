@@ -15,40 +15,40 @@ class RegisterShortcut {
     func registerGlobalHotKey(
         keyName: String,
         callback: @escaping HotKeyCallback,
-        keyStr: String,
+        keyPart: String,
         modifiers: [String],
-        hotKeyID: UInt32
+        keyId: UInt32
     ) {
         // Find the key code
-        guard let keyCode = keyboard.keyCodeMap[keyStr.uppercased()] else {
-            print("❌ registerGlobalHotKey: Unrecognized key '\(keyStr)'")
+        guard let keyCode = keyboard.keyCodeMap[keyPart.uppercased()] else {
+            print("❌ registerGlobalHotKey: Unrecognized key '\(keyPart)'")
             return
         }
 
-//        print("> register debugCallback \(keyName) \(keyStr)")
+//        print("> register debugCallback \(keyName) \(keyPart)")
 
         // The reference that macOS gives us
         var hotKeyIDRef: EventHotKeyRef?
 
         // Set Callback
         setHotKeyCallback(
-            keyName: keyName, hotKeyID: hotKeyID, callback: callback)
+            keyName: keyName, keyId: keyId, callback: callback)
 
-        installEventHandler(hotKeyID: hotKeyID)
+        installEventHandler(keyId: keyId)
         // Unmanaged<UserData>.fromOpaque(userDataPointer).release()
 
-        //  Finally register the hotKeyID
+        //  Finally register the keyId
         registerEventHotKey(
             modifiers: modifiers,
             keyCode: keyCode,
-            keyStr: keyStr,
-            hotKeyID: hotKeyID,
+            keyPart: keyPart,
+            keyId: keyId,
             hotKeyIDRef: &hotKeyIDRef
         )
     }
 
     func setHotKeyCallback(
-        keyName: String, hotKeyID: UInt32, callback: @escaping HotKeyCallback
+        keyName: String, keyId: UInt32, callback: @escaping HotKeyCallback
     ) {
 
         if globalCbMap[keyName] == nil {
@@ -57,11 +57,11 @@ class RegisterShortcut {
 
         // Now safely update the "cb" key
         globalCbMap[keyName]?["cb"] = callback
-        // print( "> Set Global hotKeyID setHotKeyCallback  \(hotKeyID) ")
+        // print( "> Set Global keyId setHotKeyCallback  \(keyId) ")
     }
 
-    func installEventHandler(hotKeyID: UInt32) {
-//        print("> get in installEventHandler for \(hotKeyID)")
+    func installEventHandler(keyId: UInt32) {
+//        print("> get in installEventHandler for \(keyId)")
         let eventType = EventTypeSpec(
             eventClass: OSType(kEventClassKeyboard),
             eventKind: UInt32(kEventHotKeyReleased)
@@ -80,46 +80,46 @@ class RegisterShortcut {
     }
 
     func registerEventHotKey(
-        modifiers: [String], keyCode: UInt32, keyStr: String, hotKeyID: UInt32,
+        modifiers: [String], keyCode: UInt32, keyPart: String, keyId: UInt32,
         hotKeyIDRef: inout EventHotKeyRef?
     ) {
 
         let status = RegisterEventHotKey(
             keyCode,
             keyboard.carbonModifiers(forModifiers: modifiers),
-            EventHotKeyID(signature: OSType(1234), id: hotKeyID),
+            EventHotKeyID(signature: OSType(1234), id: keyId),
             GetApplicationEventTarget(),
             0,
             &hotKeyIDRef
         )
 
         if status == noErr {
-            hotKeyIDRefs[hotKeyID] = hotKeyIDRef  // Store the hotKeyID reference
+            hotKeyIDRefs[keyId] = hotKeyIDRef  // Store the keyId reference
             print(
-                "> Registered hotKeyID: \(modifiers)+\(keyStr) (id=\(hotKeyID))"
+                "> Registered keyId: \(modifiers)+\(keyPart) (id=\(keyId))"
             )
         } else {
-            print("❌ Failed to register hotKeyID. Error code: \(status)")
+            print("❌ Failed to register keyId. Error code: \(status)")
         }
     }
 
-    /// Unregister a global hotKeyID by ID
-    func unregisterGlobalHotKey(_ hotKeyID: UInt32) {
+    /// Unregister a global keyId by ID
+    func unregisterGlobalHotKey(_ keyId: UInt32) {
         //        Unmanaged<UserData>.fromOpaque(userDataPointer).release()
-        print("> start Unregistered hotKeyID with ID: \(hotKeyID)")
+        print("> start Unregistered keyId with ID: \(keyId)")
         
-        if let hotKeyIDRef = hotKeyIDRefs[hotKeyID] {
+        if let hotKeyIDRef = hotKeyIDRefs[keyId] {
             let status = UnregisterEventHotKey(hotKeyIDRef)
             if status == noErr {
-                print("> Unregistered hotKeyID with ID: \(hotKeyID)")
-                hotKeyIDRefs.removeValue(forKey: hotKeyID)  // Remove from dictionary
+                print("> Unregistered keyId with ID: \(keyId)")
+                hotKeyIDRefs.removeValue(forKey: keyId)  // Remove from dictionary
             } else {
                 print(
-                    "❌ Failed to unregister hotKeyID with ID: \(hotKeyID). Error code: \(status)"
+                    "❌ Failed to unregister keyId with ID: \(keyId). Error code: \(status)"
                 )
             }
         } else {
-            print("⚠️ No hotKeyID found with ID: \(hotKeyID)")
+            print("⚠️ No keyId found with ID: \(keyId)")
         }
     }
 }

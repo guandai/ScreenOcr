@@ -10,11 +10,11 @@ var globalCbOpenSetting: HotKeyCallback = {}
 
 var globalCbMap: [String: [String: Any]] = [
     "run": [
-        "hotKeyID": UInt32(1001), "name": "run", "title": "Full OCR",
+        "keyId": UInt32(1001),
         "cb": globalCbFullOcr,
     ],
     "setting": [
-        "hotKeyID": UInt32(1002), "name": "setting", "title": "Open Settings",
+        "keyId": UInt32(1002),
         "cb": globalCbOpenSetting,
     ],
 ]
@@ -41,14 +41,14 @@ func globalHotKeyHandler(
     }
 
     if let matchingEntry = globalCbMap.first(where: {
-        $0.value["hotKeyID"] as? UInt32 == hkID.id
+        $0.value["keyId"] as? UInt32 == hkID.id
     }) {
         print("> globalHotKeyHandler Found:", matchingEntry)
         if let callback = matchingEntry.value["cb"] as? HotKeyCallback {
-            print("🔥 Executing callback for hotKeyID \(hkID.id)")
+            print("🔥 Executing callback for keyId \(hkID.id)")
             callback()
         } else {
-            print("⚠️ Callback not found for hotKeyID \(hkID.id)")
+            print("⚠️ Callback not found for keyId \(hkID.id)")
         }
     } else {
         print("❌ globalHotKeyHandler No match found")
